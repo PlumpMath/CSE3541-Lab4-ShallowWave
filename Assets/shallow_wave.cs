@@ -73,13 +73,48 @@ public class shallow_wave : MonoBehaviour
 		return heights;
 	}
 
+	float[] CopyHeightsToYs (float[,] heights)
+	{
+		int side = heights.Length;
+		int length = side * side;
+
+		float[] ys = new float[length];
+		int yIndex = 0;
+
+		for (int y = 0; y < length; y++) {
+			for (int x = 0; x < length; x++) {
+				ys [yIndex] = heights [y, x];
+
+				yIndex++;
+			}
+		}
+
+		return ys;
+	}
+
+	Vector3[] CopyYsToVertexYs (float[] ys)
+	{
+		int length = ys.Length;
+		Vector3[] vecs = new Vector3[length];
+
+		for (int i = 0; i < length; i++) {
+			vecs [i].y = ys [i];
+		}
+
+		return vecs;
+	}
+
 	// Update is called once per frame
 	void Update ()
 	{
 		Mesh mesh = GetComponent<MeshFilter> ().mesh;
 		Vector3[] vertices = mesh.vertices;
 
-		float[,] heights = CopyVertexYsToHeights (vertices);
+		h = CopyVertexYsToHeights (vertices);
+
+		float[] ys = CopyHeightsToYs (h);
+
+		vertices = CopyYsToVertexYs (ys);
 
 
 		//Step 1: Copy vertices.y into h
