@@ -109,14 +109,18 @@ public class shallow_wave : MonoBehaviour
 		Mesh mesh = GetComponent<MeshFilter> ().mesh;
 		Vector3[] vertices = mesh.vertices;
 
-		float m = UnityEngine.Random.Range (0.05F, 0.1F);
-		int i = r.Next (size - 1);
-		int j = r.Next (size - 1);
-
 		h = CopyVertexYsToHeights (vertices);
 
 		if (Input.GetKeyDown ("r")) {
-			Debug.Log ("r key pressed!");
+//			float m = UnityEngine.Random.Range (0.05F, 0.1F);
+//			int i = r.Next (size - 1);
+//			int j = r.Next (size - 1);
+
+			float m = 2.0f;
+			int i = 1;
+			int j = 1;
+
+			h [i, j] += m;
 		}
 
 		float[] ys = CopyHeightsToYs (h);
