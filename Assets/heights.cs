@@ -64,6 +64,30 @@ public class Heights
         return newVs;
     }
 
+    public static float[,] New_H(float[,] old_h, float[,] h, float damping, float rate)
+    {
+        int length = h.Length;
+        int side = (int)Math.Sqrt((double) length);
+        float[,] new_h = new float[side, side];
+
+        for(int y = 0; y < side; y++)
+        {
+            int yMinus1 = y - 1 >= 0 ? y - 1 : y;
+            int yPlus1 = y + 1 < side ? y + 1 : y;
+
+            for (int x = 0; x < side; x++)
+            {
+                int xMinus1 = x - 1 >= 0 ? x - 1 : x;
+                int xPlus1 = x + 1 < side ? x + 1 : x;
+
+                new_h[y, x] = h[y, x] + (h[y, x] - old_h[y, x]) * damping +
+                             (h[yMinus1,x] + h[yPlus1,x] + h[y,xMinus1] + h[y,xPlus1] - 4*h[y,x]) * rate;
+            }
+        }
+
+        return new_h;
+    }
+
     private static float[] Vertices_To_Ys(Vector3[] vs)
     {
         int length = vs.Length;

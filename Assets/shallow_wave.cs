@@ -53,20 +53,13 @@ public class shallow_wave : MonoBehaviour
     {	
         float rate = 0.005f;
         float damping = 0.999f;
+
+        new_h = Heights.New_H(old_h, h, damping, rate);
+
+        old_h = h;
+        h = new_h;
     }
 
-
-
-    Vector3[] CopyYsToVertexYs (float[] ys, Vector3[] vertices)
-    {
-        int length = ys.Length;
-
-        for (int i = 0; i < length; i++) {
-            vertices [i].y = ys [i];
-        }
-
-        return vertices;
-    }
 
     // Update is called once per frame
     void Update ()
@@ -82,7 +75,12 @@ public class shallow_wave : MonoBehaviour
             int j = r.Next (size - 1);
 
             h [i, j] += m;
-            Debug.Log("h: " + h[i, j]);
+
+        }
+
+        for(int s=0; s < 8; s++)
+        {
+            Shallow_Wave();
         }
 
         Vector3[] newVertices = Heights.To_Vertex_Ys(h, vertices);
