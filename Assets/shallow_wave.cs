@@ -12,6 +12,8 @@ public class shallow_wave : MonoBehaviour
 	// new height field of the mesh
 	float[,] new_h;
 
+	System.Random r = new System.Random ();
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -75,14 +77,12 @@ public class shallow_wave : MonoBehaviour
 
 	float[] CopyHeightsToYs (float[,] heights)
 	{
-		int side = heights.Length;
-		int length = side * side;
-
-		float[] ys = new float[length];
+		int side = (int)Math.Sqrt ((double)Math.Sqrt (heights.Length));
+		float[] ys = new float[heights.Length];
 		int yIndex = 0;
 
-		for (int y = 0; y < length; y++) {
-			for (int x = 0; x < length; x++) {
+		for (int y = 0; y < side; y++) {
+			for (int x = 0; x < side; x++) {
 				ys [yIndex] = heights [y, x];
 
 				yIndex++;
@@ -92,16 +92,15 @@ public class shallow_wave : MonoBehaviour
 		return ys;
 	}
 
-	Vector3[] CopyYsToVertexYs (float[] ys)
+	Vector3[] CopyYsToVertexYs (float[] ys, Vector3[] vertices)
 	{
 		int length = ys.Length;
-		Vector3[] vecs = new Vector3[length];
 
 		for (int i = 0; i < length; i++) {
-			vecs [i].y = ys [i];
+			vertices [i].y = ys [i];
 		}
 
-		return vecs;
+		return vertices;
 	}
 
 	// Update is called once per frame
@@ -110,12 +109,19 @@ public class shallow_wave : MonoBehaviour
 		Mesh mesh = GetComponent<MeshFilter> ().mesh;
 		Vector3[] vertices = mesh.vertices;
 
+		float m = UnityEngine.Random.Range (0.05F, 0.1F);
+		int i = r.Next (size - 1);
+		int j = r.Next (size - 1);
+
 		h = CopyVertexYsToHeights (vertices);
+
+		if (Input.GetKeyDown ("r")) {
+			Debug.Log ("r key pressed!");
+		}
 
 		float[] ys = CopyHeightsToYs (h);
 
-		vertices = CopyYsToVertexYs (ys);
-
+		vertices = CopyYsToVertexYs (ys, vertices);
 
 		//Step 1: Copy vertices.y into h
 
