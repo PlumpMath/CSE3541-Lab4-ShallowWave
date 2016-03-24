@@ -14,7 +14,7 @@ namespace ShallowWaveTests
                                                       { 4.0f, 5.0f, 6.0f }, 
                                                       { 7.0f, 8.0f, 9.0f } };
 
-            float[,] actualHeights = Heights.Ys_To_Heights(ys);
+            float[,] actualHeights = Heights.From_Ys(ys);
 
             CollectionAssert.AreEqual(expectedHeights, actualHeights);
         }
@@ -28,7 +28,7 @@ namespace ShallowWaveTests
                                               { 4.0f, 5.0f, 6.0f }, 
                                               { 7.0f, 8.0f, 9.0f } };
 
-            float[] actualYs = Heights.HeightsToYs(heights);
+            float[] actualYs = Heights.To_Ys(heights);
 
             CollectionAssert.AreEqual(expectedYs, actualYs);
         }

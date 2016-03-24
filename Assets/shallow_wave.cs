@@ -55,42 +55,7 @@ public class shallow_wave : MonoBehaviour
         float damping = 0.999f;
     }
 
-    float[,] CopyVertexYsToHeights (Vector3[] vertices)
-    {
-        int length = vertices.Length;
-        int side = (int)Math.Sqrt ((double)length);
 
-        float[,] heights = new float[side, size];
-
-        int vertexIndex = 0;
-
-        for (int y = 0; y < side; y++) {
-            for (int x = 0; x < side; x++) {
-                heights [y, x] = vertices [vertexIndex].y;
-
-                vertexIndex++;
-            }
-        }
-
-        return heights;
-    }
-
-    float[] CopyHeightsToYs (float[,] heights)
-    {
-        int side = (int)Math.Sqrt ((double)Math.Sqrt (heights.Length));
-        float[] ys = new float[heights.Length];
-        int yIndex = 0;
-
-        for (int y = 0; y < side; y++) {
-            for (int x = 0; x < side; x++) {
-                ys [yIndex] = heights [y, x];
-
-                yIndex++;
-            }
-        }
-
-        return ys;
-    }
 
     Vector3[] CopyYsToVertexYs (float[] ys, Vector3[] vertices)
     {
@@ -109,7 +74,7 @@ public class shallow_wave : MonoBehaviour
         Mesh mesh = GetComponent<MeshFilter> ().mesh;
         Vector3[] vertices = mesh.vertices;
 
-        h = CopyVertexYsToHeights (vertices);
+//        h = CopyVertexYsToHeights (vertices);
 
         if (Input.GetKeyDown ("r")) {
 //			float m = UnityEngine.Random.Range (0.05F, 0.1F);
@@ -124,9 +89,9 @@ public class shallow_wave : MonoBehaviour
 
         }
 
-        float[] ys = CopyHeightsToYs (h);
+ //       float[] ys = CopyHeightsToYs (h);
 
-        vertices = CopyYsToVertexYs (ys, vertices);
+  //      vertices = CopyYsToVertexYs (ys, vertices);
 
         //Step 1: Copy vertices.y into h
 
